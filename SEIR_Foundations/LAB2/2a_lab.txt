@@ -44,3 +44,16 @@ documents the “custom header + ALB rule” approach.
 3) WAF moves to CloudFront (WAFv2 scope CLOUDFRONT)
 CloudFront uses global scope Web ACLs (scope = "CLOUDFRONT").
 #lab2_cloudfront_shield_waf.tf
+
+
+4) CloudFront distribution in front of ALB
+CloudFront → ALB is a custom origin pattern. You add:
+    origin domain = ALB DNS name
+    HTTPS only to origin
+    custom header X-Chewbacca-Growl with the secret
+lab2_cloudfront_alb.tf
+
+WAF association to CloudFront is done via the distribution config (Terraform web_acl_id), consistent with AWS guidance.
+
+5) Route53: point domain to CloudFront (apex + app)
+lab2_cloudfront_r53.tf
